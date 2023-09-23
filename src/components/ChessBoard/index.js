@@ -12,8 +12,6 @@ const ChessBoard = () => {
     const [activePiece, setActivePiece] = useState(null)
     const [grabPosition, setGrabPosition] = useState({x:0,y:0})
 
-
-
     let block = []
     
     for (let i=horizontalNotation.length-1; i>=0; i--){
@@ -35,8 +33,9 @@ const ChessBoard = () => {
         const chessBoard = chessBoardRef.current
         if(chessBoard && element.classList.contains('box-piece')){
 
-            const grabX = Math.floor((e.clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8))
+            const grabX = Math.floor((e.clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8.5))
             const grabY = 7 - Math.floor((e.clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
+
             setGrabPosition({x:grabX, y:grabY})
             const x = e.clientX-(chessBoard.clientWidth/16);
             const y = e.clientY-(chessBoard.clientHeight/16);
@@ -89,7 +88,7 @@ const ChessBoard = () => {
         
 
         if(activePiece && chessBoard){
-            const x =  Math.floor((e.clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8))
+            const x =  Math.floor((e.clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8.5))
             const y = 7 - Math.floor((e.clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
 
             const currentPiece = chessPieces.find(each => each.position.x===grabPosition.x && each.position.y===grabPosition.y)
@@ -97,6 +96,7 @@ const ChessBoard = () => {
             if(currentPiece){
                 const isValid = isValidMove(grabPosition.x,grabPosition.y,x,y,currentPiece.pieceType,currentPiece.pieceColor, chessPieces)
                 
+                //special move for pawn
                 if(isEnpassantMove(grabPosition.x,grabPosition.y,x,y,currentPiece.pieceType,currentPiece.pieceColor, chessPieces)){
 
                     const direction = currentPiece.pieceColor==='l'?1:-1

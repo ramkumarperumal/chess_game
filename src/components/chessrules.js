@@ -34,10 +34,21 @@ export const isValidMove = (px, py, x, y, pieceType, pieceColor, chessPieces) =>
             return true
         }
     }
+
+    ///check valid for knight
+    if(pieceType===pieceTypeConstant.knight){
+        if((Math.abs(x-px) === 2 && Math.abs(y-py)===1 ) || (Math.abs(x-px) === 1 && Math.abs(y-py)===2)){
+            if(!boxOccupied(x,y,chessPieces) || boxOccupiedByOpp(x,y,chessPieces)){
+                return true 
+            }
+
+        }
+    }
     return false
 }
 
 
+///special move for pawn enpassant
 export const isEnpassantMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
 
     const direction = pieceColor==='l'?1:-1
