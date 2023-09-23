@@ -6,7 +6,7 @@ export const isValidMove = (px, py, x, y, pieceType, pieceColor, chessPieces) =>
 ///check for other piece in box
     const boxOccupied = (x,y,chessPieces) => {
         const piece = chessPieces.find((each) => each.position.x===x && each.position.y===y)
-        return piece
+        return piece?true: false
     }
     
 ///check for the other piece is opponent
@@ -44,6 +44,82 @@ export const isValidMove = (px, py, x, y, pieceType, pieceColor, chessPieces) =>
 
         }
     }
+
+
+    ///check valid for bishop
+    if(pieceType===pieceTypeConstant.bishop){
+
+        ///right diagonal movement
+        if((px-py)===(x-y) && (!boxOccupied(x,y,chessPieces) || boxOccupiedByOpp(x,y,chessPieces))){
+
+            const diff = x-px
+            let tmpx = diff>0 ? px : x 
+            let tmpy = diff>0 ? py : y
+
+                for (let i=1; i<Math.abs(diff); i++){
+                    tmpx+=1
+                    tmpy+=1
+                    if(boxOccupied(tmpx,tmpy, chessPieces)){
+                        return false
+                    }
+                }
+            return true
+        }
+
+        ///left diagonal movement
+        if((px+py)===(x+y) && (!boxOccupied(x,y,chessPieces) || boxOccupiedByOpp(x,y,chessPieces))){
+
+            const diff = x-px
+            let tmpx = diff>0 ? px : x 
+            let tmpy = diff>0 ? py : y
+
+                for (let i=1; i<Math.abs(diff); i++){
+                    tmpx+=1
+                    tmpy-=1
+                    if(boxOccupied(tmpx,tmpy, chessPieces)){
+                        return false
+                    }
+                }
+            return true
+        }
+    }
+
+
+    ///check valid for rook
+    if(pieceType === pieceTypeConstant.rook){
+        if((px===x  || py===y ) && (!boxOccupied(x,y,chessPieces) || boxOccupiedByOpp(x,y,chessPieces))){
+
+            ///
+            if(x-px!==0){
+                let tmpx = x-px>0?px:x 
+                const tmpy = y
+                const diff = Math.abs(x-px)
+                for (let i=1; i<diff; i++){
+                    tmpx+=1
+                    if(boxOccupied(tmpx,tmpy,chessPieces)){
+                        return false
+                    }
+                }
+            }
+            else if(y-py!==0){
+
+                let tmpy = y-py>0?py:y 
+                const tmpx = x
+                const diff = Math.abs(y-py)
+                for (let i=1; i<diff; i++){
+                    tmpy+=1
+                    if(boxOccupied(tmpx,tmpy,chessPieces)){
+                        return false
+                    }
+                }
+
+            }
+            return true
+        }
+    }
+
+
+
     return false
 }
 
