@@ -1,0 +1,35 @@
+
+.board-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc((100vh * 0.9) / 8.5);
+    height: calc((100vh * 0.85) / 8);
+}
+
+.box-piece{
+    background-repeat: no-repeat;
+    background-position: center;
+    width: calc((100vh * 0.9) / 8.5);
+    height: calc((100vh * 0.85) / 8);
+    background-size: contain;
+
+}
+
+
+.box-piece:hover{
+    cursor: grab;
+}
+
+.box-piece:active{
+    cursor: grabbing;
+}
+
+.box-black {
+    background-color: #769656;
+}
+
+.box-white {
+    background-color: #eeeed2;
+}
+

@@ -1,0 +1,10 @@
+
+
+.board-container{
+    width: calc(100vh * 0.9);
+    height: calc(100vh * 0.85);
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
