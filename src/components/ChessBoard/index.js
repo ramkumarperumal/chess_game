@@ -1,7 +1,7 @@
 
 import { useRef, useState } from 'react'
 import BoardBox from '../BoardBox'
-import {isValidMove,isEnpassantMove} from '../chessrules'
+import { isValidMove,isEnpassantMove } from '../../rules/chessrules'
 import {initialPieces, verticalNotation, horizontalNotation, pieceTypeConstant} from '../../constants'
 import './index.css'
 
