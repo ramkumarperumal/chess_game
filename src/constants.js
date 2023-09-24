@@ -6,7 +6,7 @@ export const horizontalNotation = ['1', '2', '3', '4', '5', '6', '7', '8']
 
 export const pieceTypeConstant = {
 
-    rook: 'ROOK',knight: 'KNIGHT',bishop: 'BISHOP',queen: 'QUEEN',king: 'KING',pawn: 'PAWN'
+    rook: 'ROOK',knight: 'NIGHT',bishop: 'BISHOP',queen: 'QUEEN',king: 'KING',pawn: 'PAWN'
 
 }
 
