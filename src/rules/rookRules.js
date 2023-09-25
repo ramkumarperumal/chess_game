@@ -38,3 +38,10 @@ export const rookMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
 }
 
 
+export const possibleRookMove = (piece, chessPieces) => {
+
+    let possibleMoves = []
+
+    return possibleMoves
+    
+}

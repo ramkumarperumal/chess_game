@@ -10,3 +10,11 @@ export const queenMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
     return false
     
 }
+
+export const possibleQueenMove = (piece, chessPieces) => {
+
+    let possibleMoves = []
+
+    return possibleMoves
+    
+}

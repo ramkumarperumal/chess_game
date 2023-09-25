@@ -15,3 +15,12 @@ export const kingMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
 
     return false
 }
+
+
+export const possibleKingMove = (piece, chessPieces) => {
+
+    let possibleMoves = []
+
+    return possibleMoves
+    
+}

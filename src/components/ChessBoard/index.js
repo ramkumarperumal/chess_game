@@ -1,7 +1,8 @@
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import BoardBox from '../BoardBox'
-import { isValidMove,isEnpassantMove } from '../../rules/chessrules'
+import { isValidMove,isEnpassantMove, getPossibleMove } from '../../rules/chessrules'
+
 import {initialPieces, verticalNotation, horizontalNotation, pieceTypeConstant, pieceColorConstant} from '../../constants'
 import './index.css'
 
@@ -11,7 +12,7 @@ const ChessBoard = () => {
     const modalRef = useRef(null)
     const [chessPieces, setChessPieces] = useState(initialPieces)
     const [activePiece, setActivePiece] = useState(null)
-    const [grabPosition, setGrabPosition] = useState({x:0,y:0})
+    const [grabPosition, setGrabPosition] = useState({x:-1,y:-1})
     const [promotionPawn, setPromotionPawn] = useState({})
 
 
@@ -22,30 +23,61 @@ const ChessBoard = () => {
            
             const p = chessPieces.find(each => each.position.x===j && each.position.y===i) 
             const image = p ? p.image : undefined
+
+            const currPiece = chessPieces.find(each => each.position.x===grabPosition.x && each.position.y===grabPosition.y)
             
-            block.push(<BoardBox key={verticalNotation[j]+horizontalNotation[i]} image={image} number={i+j}/>)
+
+            let highlight = false
+            if(currPiece && currPiece.possibleMoves){
+                
+            highlight = currPiece.possibleMoves.some(each => each.x===j && each.y===i)
+            
+
+            }
+
+            block.push(<BoardBox key={verticalNotation[j]+horizontalNotation[i]} image={image} number={i+j} highlight={highlight}/>)
 
         }
     }
 
 
-///grab the chess piece on move click
-    const grabPiece = (e) => {
+useEffect(() => {
+    setChessPieces(each => {
+        const updatedPieces = each.map(piece => {
 
-        const element = e.target    
+        if(piece.position.x===grabPosition.x && piece.position.y===grabPosition.y){
+
+           piece.possibleMoves = getPossibleMove(piece,each)}
+           else{
+            piece.possibleMoves  = []
+           }
+           
+            return piece
+
+        })
+        return updatedPieces  
+    })
+}
+ , [grabPosition])
+
+///grab the chess piece on move click
+    const grabPiece = (e) => {       
+         
+        const element = e.target
         const chessBoard = chessBoardRef.current
         if(chessBoard && element.classList.contains('box-piece')){
 
             const grabX = Math.floor((e.clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8))
             const grabY = 7 - Math.floor((e.clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
-
             setGrabPosition({x:grabX, y:grabY})
+            
             const x = e.clientX-(chessBoard.clientWidth/16);
             const y = e.clientY-(chessBoard.clientHeight/16);
             element.style.position = 'absolute';
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
             setActivePiece(element)
+
 
 }}
 
@@ -93,7 +125,7 @@ const ChessBoard = () => {
 
             if(each.position.x===promotionPawn.position.x && each.position.y===promotionPawn.position.y){
                 promotionPawn.pieceType = promotingType
-                const img = `assets/images/Chess_${promotingType[0].toLowerCase()+promotionPawn.pieceColor}t60.png` 
+                const img = `assets/images/Chess_${promotingType+promotionPawn.pieceColor}t60.png` 
 
                 promotionPawn.image = img
                 results.push(each)
@@ -107,10 +139,6 @@ const ChessBoard = () => {
         setChessPieces(updatedChessPieces)
 
         modalRef.current.classList.add('modal-con-hidden')
-
-       
-
-
 
     }
 
@@ -195,6 +223,7 @@ const ChessBoard = () => {
             
         }    
     }
+
     
     
     return (

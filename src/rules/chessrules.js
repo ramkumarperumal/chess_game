@@ -1,11 +1,11 @@
 
 import { pieceTypeConstant } from "../constants"
-import {pawnMove} from './pawnRule'
-import { knightMove } from "./knightRules"
-import { bishopMove } from "./bishopRules"
-import { rookMove } from "./rookRules"
-import { queenMove } from "./queenRules"
-import { kingMove } from "./kingRules"
+import {pawnMove, possiblePawnMove} from './pawnRule'
+import { knightMove, possibleKnightMove } from "./knightRules"
+import { bishopMove, possibleBishopMove } from "./bishopRules"
+import { rookMove, possibleRookMove } from "./rookRules"
+import { queenMove, possibleQueenMove } from "./queenRules"
+import { kingMove, possibleKingMove } from "./kingRules"
 
 
 
@@ -44,6 +44,30 @@ export const isValidMove = (px, py, x, y, pieceType, pieceColor, chessPieces) =>
             default:
             return false
     }
+}
+
+
+export const getPossibleMove = (currentPiece, chessPieces) => {
+
+    switch(currentPiece.pieceType){
+
+        case pieceTypeConstant.pawn:
+            return possiblePawnMove(currentPiece, chessPieces)
+        case pieceTypeConstant.knight:
+            return possibleKnightMove(currentPiece, chessPieces)
+        case pieceTypeConstant.bishop:
+            return possibleBishopMove(currentPiece, chessPieces)
+        case pieceTypeConstant.rook:
+            return possibleRookMove(currentPiece, chessPieces)
+        case pieceTypeConstant.queen:
+            return possibleQueenMove(currentPiece, chessPieces)
+        case pieceTypeConstant.king:
+            return possibleKingMove(currentPiece, chessPieces)
+        default:
+            return []
+
+    }
+
 }
 
 

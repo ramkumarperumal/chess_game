@@ -6,7 +6,7 @@ export const horizontalNotation = ['1', '2', '3', '4', '5', '6', '7', '8']
 
 export const pieceTypeConstant = {
 
-    rook: 'ROOK',knight: 'NIGHT',bishop: 'BISHOP',queen: 'QUEEN',king: 'KING',pawn: 'PAWN'
+    rook: 'r',knight: 'n',bishop: 'b',queen: 'q',king: 'k',pawn: 'p'
 
 }
 
@@ -15,9 +15,11 @@ export const pieceColorConstant = {
    black: 'd'
 }
 
+
+
 export const initialPieces = [
     {
-        "image": "assets/images/Chess_plt60.png",
+        "image": `assets/images/Chess_plt60.png`,
         position: {"x": 0,
         "y": 1},
         

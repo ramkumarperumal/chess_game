@@ -21,3 +21,26 @@ export const pawnMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
         }
         return false
 }
+
+
+export const possiblePawnMove = (piece, chessPieces) => {
+
+    const possibleMoves = []
+    const startRow = piece.pieceColor==='l'?1:6
+    const direction = piece.pieceColor==='l'?1:-1
+
+
+    if(!boxOccupied(piece.position.x, piece.position.y+direction, chessPieces)){
+            possibleMoves.push({x: piece.position.x, y:piece.position.y+direction})
+        
+    }
+
+    if(piece.position.y===startRow && !boxOccupied(piece.position.x, piece.position.y+(direction*2), chessPieces)){
+        
+        possibleMoves.push({x: piece.position.x, y:piece.position.y+(direction*2)})
+        
+    }
+
+    return possibleMoves
+
+}

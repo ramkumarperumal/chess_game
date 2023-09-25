@@ -37,4 +37,15 @@ export const bishopMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
             return true
         }
         return false
+}
+
+
+
+
+export const possibleBishopMove = (piece, chessPieces) => {
+
+    let possibleMoves = []
+
+    return possibleMoves
+    
     }
