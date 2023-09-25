@@ -88,8 +88,8 @@ useEffect(() => {
 
             const minX = chessBoard.offsetLeft-25
             const minY = chessBoard.offsetTop-15
-            const maxX = chessBoard.offsetLeft+chessBoard.clientWidth-80
-            const maxY = chessBoard.offsetTop+chessBoard.clientHeight-80
+            const maxX = chessBoard.offsetLeft+chessBoard.clientWidth-65
+            const maxY = chessBoard.offsetTop+chessBoard.clientHeight-65
             const x = e.clientX-(chessBoard.clientWidth/16);
             const y = e.clientY-(chessBoard.clientHeight/16);
 

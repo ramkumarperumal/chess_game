@@ -9,6 +9,7 @@ import { kingMove, possibleKingMove } from "./kingRules"
 
 
 
+
 ///special move for pawn enpassant
 export const isEnpassantMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
 

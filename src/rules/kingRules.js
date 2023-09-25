@@ -19,7 +19,23 @@ export const kingMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
 
 export const possibleKingMove = (piece, chessPieces) => {
 
+    
+
     let possibleMoves = []
+    const currX = piece.position.x
+    const currY = piece.position.y
+
+    for(let i=-1; i<2; i++){
+        for(let j=-1; j<2; j++){
+            if(i===0 && j===0){
+                continue 
+            }
+            if(currX+i<8 && currX+i>=0 && currY+j<8 && currY+j>=0 && (!boxOccupied(currX+i,currY+j, chessPieces) || boxOccupiedByOpp(currX+i, currY+j, piece.pieceColor, chessPieces))){
+                possibleMoves.push({x:currX+i, y: currY+j})
+            }
+        }
+    }
+
 
     return possibleMoves
     

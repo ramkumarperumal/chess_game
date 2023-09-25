@@ -42,6 +42,70 @@ export const possibleRookMove = (piece, chessPieces) => {
 
     let possibleMoves = []
 
+    const currX = piece.position.x
+    const currY = piece.position.y
+
+    
+    for (let i=1; i<8; i++){
+
+        if(currX-i>=0 ){
+            if(!boxOccupied(currX-i,currY, chessPieces)){
+            possibleMoves.push({x: currX-i, y: currY}) }
+            else if(boxOccupiedByOpp(currX-i,currY,piece.pieceColor, chessPieces)){
+                possibleMoves.push({x: currX-i, y: currY})
+                break
+            }
+            else{
+                break
+            }
+        }
+    }
+
+    for (let i=1; i<8; i++){
+
+        if(currX+i<8){
+            if(!boxOccupied(currX+i,currY, chessPieces)){
+            possibleMoves.push({x: currX+i, y: currY}) }
+            else if(boxOccupiedByOpp(currX+i,currY,piece.pieceColor, chessPieces)){
+                possibleMoves.push({x: currX+i, y: currY})
+                break
+            }
+            else{
+                break
+            }
+        }
+    }
+
+    for (let i=1; i<8; i++){
+
+        if(currY-i>=0){
+            if(!boxOccupied(currX,currY-i, chessPieces)){
+            possibleMoves.push({x: currX, y: currY-i}) }
+            else if(boxOccupiedByOpp(currX,currY-i,piece.pieceColor, chessPieces)){
+                possibleMoves.push({x: currX, y: currY-i})
+                break
+            }
+            else{
+                break
+            }
+        }
+    }
+
+    for (let i=1; i<8; i++){
+
+        if(currY+i<8){
+            if(!boxOccupied(currX,currY+i, chessPieces)){
+            possibleMoves.push({x: currX, y: currY+i}) }
+            else if(boxOccupiedByOpp(currX,currY+i,piece.pieceColor, chessPieces)){
+                possibleMoves.push({x: currX, y: currY+i})
+                break
+            }
+            else{
+                break
+            }
+        }
+    }
+
     return possibleMoves
     
 }

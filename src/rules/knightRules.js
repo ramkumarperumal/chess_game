@@ -29,12 +29,12 @@ export const possibleKnightMove = (piece, chessPieces) => {
             const checky2 = piece.position.y+possiblex[i]
 
             if(checkx1>=0 && checky1>=0 && checkx1<8 && checky1<8){
-                if(!boxOccupied(checkx1, checky1, chessPieces)){
+                if(!boxOccupied(checkx1, checky1, chessPieces) || boxOccupiedByOpp(checkx1, checky1, piece.pieceColor, chessPieces)){
                     possibleMoves.push({x: checkx1, y:checky1})
                 }
             }
             if(checkx2>=0 && checky2>=0 && checkx2<8 && checky2<8){
-                if(!boxOccupied(checkx2, checky2, chessPieces)){
+                if(!boxOccupied(checkx2, checky2, chessPieces) || boxOccupiedByOpp(checkx2, checky2, piece.pieceColor, chessPieces)){
                     possibleMoves.push({x: checkx2, y:checky2})
                 }
             }

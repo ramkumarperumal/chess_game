@@ -45,6 +45,75 @@ export const bishopMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
 export const possibleBishopMove = (piece, chessPieces) => {
 
     let possibleMoves = []
+    const currX = piece.position.x
+    const currY = piece.position.y
+
+    for (let i=1; i<8; i++){
+
+        if(currX-i>=0 && currY-i>=0){
+            if(!boxOccupied(currX-i,currY-i, chessPieces)){
+            possibleMoves.push({x: currX-i, y: currY-i}) }
+            else if(boxOccupiedByOpp(currX-i,currY-i,piece.pieceColor, chessPieces)){
+                possibleMoves.push({x: currX-i, y: currY-i})
+                break
+            }
+            else{
+                break
+            }
+        }
+    }
+
+    for (let i=1; i<8; i++){
+        if(currX-i>=0 && currY+i<8){
+         if(!boxOccupied(currX-i,currY+i, chessPieces)){
+            possibleMoves.push({x: currX-i, y: currY+i})
+        }
+        else if(boxOccupiedByOpp(currX-i,currY+i ,piece.pieceColor, chessPieces)){
+            possibleMoves.push({x: currX-i, y: currY+i})
+            break
+        }
+        else{
+            break
+        }
+    }
+    }
+
+
+    for (let i=1; i<8; i++){
+        if(currX+i<8 && currY-i>=0){
+         if(!boxOccupied(currX+i,currY-i, chessPieces)){
+            possibleMoves.push({x: currX+i, y: currY-i})   
+        }
+        else if(boxOccupiedByOpp(currX+i,currY-i, piece.pieceColor, chessPieces)){
+            possibleMoves.push({x: currX+i, y: currY-i})
+            break
+        }
+        else{
+            break
+        }
+    }
+    }
+
+
+    for (let i=1; i<8; i++){
+
+        if(currX+i<8 && currY+i<8){
+            if(!boxOccupied(currX+i,currY+i, chessPieces)){
+                possibleMoves.push({x: currX+i, y: currY+i})    
+            }
+            else if(boxOccupiedByOpp(currX+i,currY+i ,piece.pieceColor, chessPieces)){
+                possibleMoves.push({x: currX+i, y: currY+i})
+                break
+            }
+            else{
+                break
+            }
+
+        }
+    }
+
+    
+
 
     return possibleMoves
     

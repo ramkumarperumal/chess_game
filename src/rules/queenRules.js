@@ -1,5 +1,5 @@
-import { rookMove } from "./rookRules"
-import { bishopMove } from "./bishopRules"
+import { rookMove,possibleRookMove } from "./rookRules"
+import { bishopMove, possibleBishopMove } from "./bishopRules"
 
 
 export const queenMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
@@ -14,6 +14,10 @@ export const queenMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
 export const possibleQueenMove = (piece, chessPieces) => {
 
     let possibleMoves = []
+
+    possibleMoves.push(...possibleBishopMove(piece,chessPieces))
+    possibleMoves.push(...possibleRookMove(piece, chessPieces))
+    
 
     return possibleMoves
     
