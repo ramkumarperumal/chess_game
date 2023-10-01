@@ -17,7 +17,7 @@ export const isEnpassantMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
 
     if(pieceType===pieceTypeConstant.pawn){
         if((x-px===-1 | x-px===1) && y-py === direction){
-            const piece = chessPieces.find(each => each.position.x===x && each.position.y===y-direction && each.enPassant)
+            const piece = chessPieces.find(each => each.position.x===x && each.position.y===y-direction && each.enPassant && each.pieceColor!==pieceColor)
             if(piece){
                 return true
             }

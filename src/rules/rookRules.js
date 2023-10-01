@@ -1,11 +1,11 @@
 import { boxOccupied, boxOccupiedByOpp } from "./generalRules"
-
+import { Position } from "../models/position"
 
 
 
 ///check valid move for rook
 export const rookMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
-    if((px===x  || py===y ) && (!boxOccupied(x,y,chessPieces) || boxOccupiedByOpp(x,y,pieceColor,chessPieces))){
+    if((px===x  || py===y ) && (!boxOccupied(new Position(x,y),chessPieces) || boxOccupiedByOpp(new Position(x,y),pieceColor,chessPieces))){
 
         ///
         if(x-px!==0){
@@ -14,7 +14,7 @@ export const rookMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
             const diff = Math.abs(x-px)
             for (let i=1; i<diff; i++){
                 tmpx+=1
-                if(boxOccupied(tmpx,tmpy,chessPieces)){
+                if(boxOccupied(new Position(tmpx,tmpy),chessPieces)){
                     return false
                 }
             }
@@ -26,7 +26,7 @@ export const rookMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
             const diff = Math.abs(y-py)
             for (let i=1; i<diff; i++){
                 tmpy+=1
-                if(boxOccupied(tmpx,tmpy,chessPieces)){
+                if(boxOccupied(new Position(tmpx,tmpy),chessPieces)){
                     return false
                 }
             }
@@ -49,10 +49,10 @@ export const possibleRookMove = (piece, chessPieces) => {
     for (let i=1; i<8; i++){
 
         if(currX-i>=0 ){
-            if(!boxOccupied(currX-i,currY, chessPieces)){
-            possibleMoves.push({x: currX-i, y: currY}) }
-            else if(boxOccupiedByOpp(currX-i,currY,piece.pieceColor, chessPieces)){
-                possibleMoves.push({x: currX-i, y: currY})
+            if(!boxOccupied(new Position(currX-i,currY), chessPieces)){
+            possibleMoves.push(new Position(currX-i, currY)) }
+            else if(boxOccupiedByOpp(new Position(currX-i,currY),piece.pieceColor, chessPieces)){
+                possibleMoves.push(new Position(currX-i, currY))
                 break
             }
             else{
@@ -64,10 +64,10 @@ export const possibleRookMove = (piece, chessPieces) => {
     for (let i=1; i<8; i++){
 
         if(currX+i<8){
-            if(!boxOccupied(currX+i,currY, chessPieces)){
-            possibleMoves.push({x: currX+i, y: currY}) }
-            else if(boxOccupiedByOpp(currX+i,currY,piece.pieceColor, chessPieces)){
-                possibleMoves.push({x: currX+i, y: currY})
+            if(!boxOccupied(new Position(currX+i,currY), chessPieces)){
+            possibleMoves.push(new Position(currX+i, currY)) }
+            else if(boxOccupiedByOpp(new Position(currX+i,currY),piece.pieceColor, chessPieces)){
+                possibleMoves.push(new Position(currX+i, currY))
                 break
             }
             else{
@@ -79,10 +79,10 @@ export const possibleRookMove = (piece, chessPieces) => {
     for (let i=1; i<8; i++){
 
         if(currY-i>=0){
-            if(!boxOccupied(currX,currY-i, chessPieces)){
-            possibleMoves.push({x: currX, y: currY-i}) }
-            else if(boxOccupiedByOpp(currX,currY-i,piece.pieceColor, chessPieces)){
-                possibleMoves.push({x: currX, y: currY-i})
+            if(!boxOccupied(new Position(currX,currY-i), chessPieces)){
+            possibleMoves.push(new Position(currX, currY-i)) }
+            else if(boxOccupiedByOpp(new Position(currX,currY-i),piece.pieceColor, chessPieces)){
+                possibleMoves.push(new Position(currX, currY-i))
                 break
             }
             else{
@@ -94,10 +94,10 @@ export const possibleRookMove = (piece, chessPieces) => {
     for (let i=1; i<8; i++){
 
         if(currY+i<8){
-            if(!boxOccupied(currX,currY+i, chessPieces)){
-            possibleMoves.push({x: currX, y: currY+i}) }
-            else if(boxOccupiedByOpp(currX,currY+i,piece.pieceColor, chessPieces)){
-                possibleMoves.push({x: currX, y: currY+i})
+            if(!boxOccupied(new Position(currX,currY+i), chessPieces)){
+            possibleMoves.push(new Position(currX, currY+i)) }
+            else if(boxOccupiedByOpp(new Position(currX,currY+i),piece.pieceColor, chessPieces)){
+                possibleMoves.push(new Position(currX, currY+i))
                 break
             }
             else{

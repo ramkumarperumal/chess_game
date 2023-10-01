@@ -1,3 +1,7 @@
+import { Piece } from "./models/piece"
+import { Position } from "./models/position"
+import { board } from "./models/board"
+
 export const verticalNotation = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
 
@@ -17,277 +21,148 @@ export const pieceColorConstant = {
 
 
 
-export const initialPieces = [
-    {
-        "image": `assets/images/Chess_plt60.png`,
-        position: {"x": 0,
-        "y": 1},
-        
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.white,
-        "enPassant": false 
-    },
-    {
-        "image": "assets/images/Chess_plt60.png",
-        position: {"x": 1,
-        "y": 1},
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.white,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_plt60.png",
-        position: {"x": 2,
-        "y": 1},
-        
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.white,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_plt60.png",
-        position: {"x": 3,
-        "y": 1}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.white,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_plt60.png",
-        position: {"x": 4,
-        "y": 1}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.white,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_plt60.png",
-        position : {"x": 5,
-        "y": 1}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.white,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_plt60.png",
-        position: {"x": 6,
-        "y": 1}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.white,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_plt60.png",
-        position: {"x": 7,
-        "y": 1}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.white,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_pdt60.png",
-        position: {"x": 0,
-        "y": 6}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.black,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_pdt60.png",
-        position: {"x": 1,
-        "y": 6}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.black,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_pdt60.png",
-        position: {"x": 2,
-        "y": 6}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.black,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_pdt60.png",
-        position: {"x": 3,
-        "y": 6}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.black,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_pdt60.png",
-        position: {"x": 4,
-        "y": 6}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.black,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_pdt60.png",
-        position: {"x": 5,
-        "y": 6}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.black,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_pdt60.png",
-        position: {"x": 6,
-        "y": 6}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.black,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_pdt60.png",
-        position: {"x": 7,
-        "y": 6}
-        ,
-        "pieceType": pieceTypeConstant.pawn,
-        "pieceColor": pieceColorConstant.black,
-        "enPassant": false
-    },
-    {
-        "image": "assets/images/Chess_rdt60.png",
-        position: {"x": 0,
-        "y": 7}
-        ,
-        "pieceType": pieceTypeConstant.rook,
-        "pieceColor": pieceColorConstant.black
-    },
-    {
-        "image": "assets/images/Chess_ndt60.png",
-        position: {"x": 1,
-        "y": 7}
-        ,
-        "pieceType": pieceTypeConstant.knight,
-        "pieceColor": pieceColorConstant.black
-    },
-    {
-        "image": "assets/images/Chess_bdt60.png",
-        position: {"x": 2,
-        "y": 7}
-        ,
-        "pieceType": pieceTypeConstant.bishop,
-        "pieceColor": pieceColorConstant.black
-    },
-    {
-        "image": "assets/images/Chess_qdt60.png",
-        position: {"x": 3,
-        "y": 7}
-        ,
-        "pieceType": pieceTypeConstant.queen,
-        "pieceColor": pieceColorConstant.black
-    },
-    {
-        "image": "assets/images/Chess_kdt60.png",
-        position: {"x": 4,
-        "y": 7}
-        ,
-        "pieceType": pieceTypeConstant.king,
-        "pieceColor": pieceColorConstant.black
-        
-    },
-    {
-        "image": "assets/images/Chess_bdt60.png",
-        position: {"x": 5,
-        "y": 7}
-        ,
-        "pieceType": pieceTypeConstant.bishop,
-        "pieceColor": pieceColorConstant.black
-    },
-    {
-        "image": "assets/images/Chess_ndt60.png",
-        position: {"x": 6,
-        "y": 7}
-        ,
-        "pieceType": pieceTypeConstant.knight,
-        "pieceColor": pieceColorConstant.black
-    },
-    {
-        "image": "assets/images/Chess_rdt60.png",
-        position: {"x": 7,
-        "y": 7}
-        ,
-        "pieceType": pieceTypeConstant.rook,
-        "pieceColor": pieceColorConstant.black
-    },
-    {
-        "image": "assets/images/Chess_rlt60.png",
-        position: {"x": 0,
-        "y": 0}
-        ,
-        "pieceType": pieceTypeConstant.rook,
-        "pieceColor": pieceColorConstant.white
-    },
-    {
-        "image": "assets/images/Chess_nlt60.png",
-        position: {"x": 1,
-        "y": 0}
-        ,
-        "pieceType": pieceTypeConstant.knight,
-        "pieceColor": pieceColorConstant.white
-    },
-    {
-        "image": "assets/images/Chess_blt60.png",
-        position: {"x": 2,
-        "y": 0}
-        ,
-        "pieceType": pieceTypeConstant.bishop,
-        "pieceColor": pieceColorConstant.white
-    },
-    {
-        "image": "assets/images/Chess_qlt60.png",
-        position: {"x": 3,
-        "y": 0}
-        ,
-        "pieceType": pieceTypeConstant.queen,
-        "pieceColor": pieceColorConstant.white
-    },
-    {
-        "image": "assets/images/Chess_klt60.png",
-        position: {"x": 4,
-        "y": 0}
-        ,
-        "pieceType": pieceTypeConstant.king,
-        "pieceColor": pieceColorConstant.white
-    },
-    {
-        "image": "assets/images/Chess_blt60.png",
-        position: {"x": 5,
-        "y": 0}
-        ,
-        "pieceType": pieceTypeConstant.bishop,
-        "pieceColor": pieceColorConstant.white
-    },
-    {
-        "image": "assets/images/Chess_nlt60.png",
-        position: {"x": 6,
-        "y": 0}
-        ,
-        "pieceType": pieceTypeConstant.knight,
-        "pieceColor": pieceColorConstant.white
-    },
-    {
-        "image": "assets/images/Chess_rlt60.png",
-        position: {"x": 7,
-        "y": 0}
-        ,
-        "pieceType": pieceTypeConstant.rook,
-        "pieceColor": pieceColorConstant.white
-    }
-]
+export const initialPieces = new board([
+    new Piece(new Position(0, 1), pieceTypeConstant.pawn,
+        pieceColorConstant.white, false, []
+        ),
+   
+    
+        new Piece(new Position(1, 1),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.white,
+        false , []),
+    
+        new Piece(new Position(2, 1),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.white,
+         false, []),
+    
+        new Piece(new Position(3, 1),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.white,
+         false, []),
+    
+        new Piece(new Position(4, 1),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.white,
+         false, []),
+    
+        new Piece(new Position(5, 1),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.white,
+         false, []),
+    
+        new Piece(new Position(6, 1),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.white,
+         false, []),
+    
+        new Piece(new Position(7, 1),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.white,
+         false, []),
+    
+        new Piece(new Position(0, 6),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.black,
+         false, []),
+    
+        new Piece(new Position(1, 6),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.black,
+         false, []),
+    
+        new Piece(new Position(2, 6),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.black,
+         false, []),
+    
+        new Piece(new Position(3, 6),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.black,
+         false, []),
+    
+        new Piece(new Position(4, 6),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.black,
+         false, []),
+    
+        new Piece(new Position(5, 6),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.black,
+         false, []),
+    
+        new Piece(new Position(6, 6),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.black,
+         false, []),
+    
+        new Piece(new Position(7, 6),
+         pieceTypeConstant.pawn,
+         pieceColorConstant.black,
+         false, []),
+    
+        new Piece(new Position(0, 7),
+         pieceTypeConstant.rook,
+         pieceColorConstant.black,false, []),
+    
+        new Piece(new Position(1, 7),
+         pieceTypeConstant.knight,
+         pieceColorConstant.black,false, []),
+    
+        new Piece(new Position(2, 7),
+         pieceTypeConstant.bishop,
+         pieceColorConstant.black,false, []),
+    
+        new Piece(new Position(3, 7),
+         pieceTypeConstant.queen,
+         pieceColorConstant.black,false, []),
+    
+        new Piece(new Position(4, 7),
+         pieceTypeConstant.king,
+         pieceColorConstant.black,false, []),
+    
+        new Piece(new Position(5, 7),
+         pieceTypeConstant.bishop,
+         pieceColorConstant.black,false, []),
+    
+        new Piece(new Position(6, 7),
+         pieceTypeConstant.knight,
+         pieceColorConstant.black,false, []),
+    
+        new Piece(new Position(7, 7),
+         pieceTypeConstant.rook,
+         pieceColorConstant.black,false, []),
+    
+        new Piece(new Position(0, 0),
+         pieceTypeConstant.rook,
+         pieceColorConstant.white,false, []),
+    
+        new Piece(new Position(1, 0),
+         pieceTypeConstant.knight,
+         pieceColorConstant.white,false, []),
+    
+        new Piece(new Position(2, 0),
+         pieceTypeConstant.bishop,
+         pieceColorConstant.white,false, []),
+    
+        new Piece(new Position(3, 0),
+         pieceTypeConstant.queen,
+         pieceColorConstant.white,false, []),
+    
+        new Piece(new Position(4, 0),
+         pieceTypeConstant.king,
+         pieceColorConstant.white,false, []),
+    
+        new Piece(new Position(5, 0),
+         pieceTypeConstant.bishop,
+         pieceColorConstant.white,false, []),
+    
+        new Piece(new Position(6, 0),
+         pieceTypeConstant.knight,
+         pieceColorConstant.white,false, []),
+    
+        new Piece(new Position(7, 0),
+         pieceTypeConstant.rook,
+         pieceColorConstant.white,false, [])
+], 0)

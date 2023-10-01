@@ -1,19 +1,22 @@
 
 import { useRef, useState, useEffect } from 'react'
 import BoardBox from '../BoardBox'
-import { isValidMove,isEnpassantMove, getPossibleMove } from '../../rules/chessrules'
+import { isEnpassantMove, getPossibleMove } from '../../rules/chessrules'
+import { Position } from '../../models/position'
 
 import {initialPieces, verticalNotation, horizontalNotation, pieceTypeConstant, pieceColorConstant} from '../../constants'
 import './index.css'
+import { board } from '../../models/board'
 
 const ChessBoard = () => {
     
     const chessBoardRef = useRef(null)
     const modalRef = useRef(null)
-    const [chessPieces, setChessPieces] = useState(initialPieces)
+    const [chessPieces, setChessPieces] = useState(initialPieces.pieces)
     const [activePiece, setActivePiece] = useState(null)
-    const [grabPosition, setGrabPosition] = useState({x:-1,y:-1})
+    const [grabPosition, setGrabPosition] = useState(new Position(-1,-1))
     const [promotionPawn, setPromotionPawn] = useState({})
+
 
 
     let block = []
@@ -21,16 +24,16 @@ const ChessBoard = () => {
     for (let i=horizontalNotation.length-1; i>=0; i--){
         for(let j=0; j<verticalNotation.length; j++){
            
-            const p = chessPieces.find(each => each.position.x===j && each.position.y===i) 
+            const p = chessPieces.find(each => each.position.samePosition(new Position(j,i))) 
             const image = p ? p.image : undefined
 
-            const currPiece = chessPieces.find(each => each.position.x===grabPosition.x && each.position.y===grabPosition.y)
+            const currPiece = chessPieces.find(each => each.position.samePosition(grabPosition))
             
 
             let highlight = false
             if(currPiece && currPiece.possibleMoves){
                 
-            highlight = currPiece.possibleMoves.some(each => each.x===j && each.y===i)
+            highlight = currPiece.possibleMoves.some(each => each.samePosition(new Position(j,i)))
             
 
             }
@@ -40,20 +43,32 @@ const ChessBoard = () => {
         }
     }
 
+    
+
 
 useEffect(() => {
+
+    const currentPiece = chessPieces.find(each => each.position.x===grabPosition.x && each.position.y===grabPosition.y)
     setChessPieces(each => {
         const updatedPieces = each.map(piece => {
-
-        if(piece.position.x===grabPosition.x && piece.position.y===grabPosition.y){
-
-           piece.possibleMoves = getPossibleMove(piece,each)}
-           else{
+        
+        if(piece.position.samePosition(grabPosition)){
+            if(piece.pieceType === pieceTypeConstant.king && currentPiece){
+                currentPiece.possibleMoves = getPossibleMove(piece,each)
+                for(const piece2 of each){
+                    piece2.possibleMoves = getPossibleMove(piece2, each)
+                }
+            }
+            else{
+            if(currentPiece){
+           currentPiece.possibleMoves = getPossibleMove(piece,each)
+           piece.possibleMoves = currentPiece.possibleMoves
+           }
+        }
+          } else{
             piece.possibleMoves  = []
            }
-           
             return piece
-
         })
         return updatedPieces  
     })
@@ -69,7 +84,7 @@ useEffect(() => {
 
             const grabX = Math.floor((e.clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8))
             const grabY = 7 - Math.floor((e.clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
-            setGrabPosition({x:grabX, y:grabY})
+            setGrabPosition(new Position(grabX, grabY))
             
             const x = e.clientX-(chessBoard.clientWidth/16);
             const y = e.clientY-(chessBoard.clientHeight/16);
@@ -119,11 +134,10 @@ useEffect(() => {
 
     const promotingPawn = (promotingType) => {
 
-        console.log(promotionPawn.position.x, promotionPawn.position.y)
         const updatedChessPieces = chessPieces.reduce((results, each) => {
 
 
-            if(each.position.x===promotionPawn.position.x && each.position.y===promotionPawn.position.y){
+            if(each.position.samePosition(promotionPawn.position)){
                 promotionPawn.pieceType = promotingType
                 const img = `assets/images/Chess_${promotingType+promotionPawn.pieceColor}t60.png` 
 
@@ -158,22 +172,33 @@ useEffect(() => {
             const y = 7 - Math.floor((e.clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
 
             const currentPiece = chessPieces.find(each => each.position.x===grabPosition.x && each.position.y===grabPosition.y)
-      
+
+
+            const validTurn = (currentPiece && currentPiece.pieceColor===pieceColorConstant.white && initialPieces.moveCount%2===0) || 
+                              (currentPiece && currentPiece.pieceColor===pieceColorConstant.black && initialPieces.moveCount%2!==0)
+            
+
+
+            const validMove = currentPiece && currentPiece.possibleMoves && currentPiece.possibleMoves.some(each => each.samePosition(new Position(x,y)))?true:false
+
+
+
             if(currentPiece){
-                const isValid = isValidMove(grabPosition.x,grabPosition.y,x,y,currentPiece.pieceType,currentPiece.pieceColor, chessPieces)
                 
                 //special move for pawn
-                if(isEnpassantMove(grabPosition.x,grabPosition.y,x,y,currentPiece.pieceType,currentPiece.pieceColor, chessPieces)){
+                if(validTurn && isEnpassantMove(grabPosition.x,grabPosition.y,x,y,currentPiece.pieceType,currentPiece.pieceColor, chessPieces)){
+
+                    initialPieces.moveCount+=1
 
                     const direction = currentPiece.pieceColor==='l'?1:-1
                     const updatedChessPieces = chessPieces.reduce((results, each) => {
-                        if(each.position.x===grabPosition.x && each.position.y===grabPosition.y){
+                        if(each.position.samePosition(grabPosition)){
                             each.enPassant = false
                             each.position.x = x
                             each.position.y = y 
                             results.push(each)
                         }
-                        else if(!(each.position.x===x && each.position.y===y-direction)){
+                        else if(!(each.position.samePosition(new Position(x,y-direction)))){
                             each.enPassant = false
                             results.push(each)
                         }
@@ -182,9 +207,11 @@ useEffect(() => {
                     setChessPieces(updatedChessPieces)
                 }
 
-                else if(isValid){
+                else if(validTurn && validMove){
+                    initialPieces.moveCount+=1
+
                     const updatedChessPieces = chessPieces.reduce((results, each) => {
-                        if(each.position.x===grabPosition.x && each.position.y===grabPosition.y){
+                        if(each.position.samePosition(grabPosition)){
 
                             const promotionCol = each.pieceColor===pieceColorConstant.white?7:0
 
@@ -202,7 +229,7 @@ useEffect(() => {
                             results.push(each)
 
                     }
-                        else if(!(each.position.x===x && each.position.y===y)){
+                        else if(!(each.position.samePosition(new Position(x,y)))){
                             if(each.pieceType===pieceTypeConstant.pawn){
                                 each.enPassant = false
                             }

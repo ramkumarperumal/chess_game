@@ -1,11 +1,11 @@
 import { boxOccupied, boxOccupiedByOpp } from "./generalRules"
-
+import { Position } from "../models/position"
 
 ///check valid move for knight
 export const knightMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
 
     if((Math.abs(x-px) === 2 && Math.abs(y-py)===1 ) || (Math.abs(x-px) === 1 && Math.abs(y-py)===2)){
-        if(!boxOccupied(x,y,chessPieces) || boxOccupiedByOpp(x,y,pieceColor,chessPieces)){
+        if(!boxOccupied(new Position(x,y),chessPieces) || boxOccupiedByOpp(new Position(x,y),pieceColor,chessPieces)){
             return true 
         }
 
@@ -29,13 +29,13 @@ export const possibleKnightMove = (piece, chessPieces) => {
             const checky2 = piece.position.y+possiblex[i]
 
             if(checkx1>=0 && checky1>=0 && checkx1<8 && checky1<8){
-                if(!boxOccupied(checkx1, checky1, chessPieces) || boxOccupiedByOpp(checkx1, checky1, piece.pieceColor, chessPieces)){
-                    possibleMoves.push({x: checkx1, y:checky1})
+                if(!boxOccupied(new Position(checkx1, checky1), chessPieces) || boxOccupiedByOpp(new Position(checkx1, checky1), piece.pieceColor, chessPieces)){
+                    possibleMoves.push(new Position(checkx1, checky1))
                 }
             }
             if(checkx2>=0 && checky2>=0 && checkx2<8 && checky2<8){
-                if(!boxOccupied(checkx2, checky2, chessPieces) || boxOccupiedByOpp(checkx2, checky2, piece.pieceColor, chessPieces)){
-                    possibleMoves.push({x: checkx2, y:checky2})
+                if(!boxOccupied(new Position(checkx2, checky2), chessPieces) || boxOccupiedByOpp(new Position(checkx2, checky2), piece.pieceColor, chessPieces)){
+                    possibleMoves.push(new Position(checkx2, checky2))
                 }
             }
         }
