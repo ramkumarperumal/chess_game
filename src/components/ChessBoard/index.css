@@ -1,5 +1,3 @@
-
-
 .board-container{
     width: calc(100vh * 0.9);
     height: calc(100vh * 0.85);
@@ -8,16 +6,6 @@
     grid-template-rows: repeat(8, calc((100vh * 0.85) / 8));
 
 }
-
-.modal-bg{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 
 .modal-container{
 
@@ -30,6 +18,64 @@
     align-items: center;
     background-color: rgba(127,127,127,0.8);
 }
+
+.modal-container-game-over{
+
+    width: calc(100vh * 0.9);
+    height: calc((100vh * 0.85)/2);
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(127,127,127,0.8);
+
+}
+
+@media screen and (orientation: portrait){
+
+    .board-container{
+        width: calc(100vw * 0.9);
+    height: calc(100vw * 0.85);
+    display: grid;
+    grid-template-columns: repeat(8, calc((100vw * 0.9) / 8));
+    grid-template-rows: repeat(8, calc((100vw * 0.85) / 8));
+    overflow: hidden;
+
+    }
+
+    .modal-container{
+
+        width: calc(100vw * 0.9);
+        height: calc((100vw * 0.85)/2);
+       }
+    
+    .modal-container-game-over{
+    
+        width: calc(100vw * 0.9);
+        height: calc((100vw * 0.85)/2);
+      
+    
+    }
+
+}
+
+
+
+
+
+.modal-bg{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
 
 .modal-con-hidden{
     visibility: hidden;
@@ -51,19 +97,7 @@
     font-family: 'Roboto';
 }
 
-.modal-container-game-over{
 
-    width: calc(100vh * 0.9);
-    height: calc((100vh * 0.85)/2);
-    padding: 0px;
-    margin: 0px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(127,127,127,0.8);
-
-}
 
 .game-over-btn{
     height: 50px;

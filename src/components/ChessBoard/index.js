@@ -113,6 +113,8 @@ const onClickPlayAgain = () => {
 
 ///grab the chess piece on move click
     const grabPiece = (e) => {   
+
+        
                  
         const element = e.target
         const chessBoard = chessBoardRef.current
@@ -120,17 +122,26 @@ const onClickPlayAgain = () => {
 
             const grabX = Math.floor((e.clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8))
             const grabY = 7 - Math.floor((e.clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
+           
             setGrabPosition(new Position(grabX, grabY))
+           
             
             const x = e.clientX-(chessBoard.clientWidth/16);
             const y = e.clientY-(chessBoard.clientHeight/16);
+
+            
+            console.log(grabX, grabY)
+
+            console.log(x,y)
+            
             element.style.position = 'absolute';
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
             setActivePiece(element)
+            
 
-
-}}
+}
+}
 
 ///move the chess piece on mouse movement
     const movePiece = (e) => {
@@ -143,6 +154,9 @@ const onClickPlayAgain = () => {
             const maxY = chessBoard.offsetTop+chessBoard.clientHeight-65
             const x = e.clientX-(chessBoard.clientWidth/16);
             const y = e.clientY-(chessBoard.clientHeight/16);
+
+
+            console.log(x,y)
 
             if(x<minX){
                 activePiece.style.left = `${minX}px`
@@ -218,12 +232,9 @@ const onClickPlayAgain = () => {
 
             const validMove = currentPiece && currentPiece.possibleMoves && currentPiece.possibleMoves.some(each => each.samePosition(new Position(x,y)))?true:false
             
+
             const destinationPiece = chessPieces.find(each => each.position.samePosition(new Position(x,y)))
-
-            console.log(currentPiece, initialPieces.moveCount)
-
-
-                //castling move for king
+         //castling move for king
                 if(destinationPiece && currentPiece.pieceType===pieceTypeConstant.king && destinationPiece.pieceType===pieceTypeConstant.rook && currentPiece.pieceColor===destinationPiece.pieceColor && currentPiece.possibleMoves.some(each => each.samePosition(destinationPiece.position))){
 
                     initialPieces.moveCount+=1
