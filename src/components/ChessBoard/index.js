@@ -114,25 +114,28 @@ const onClickPlayAgain = () => {
 ///grab the chess piece on move click
     const grabPiece = (e) => {   
 
-        
                  
         const element = e.target
         const chessBoard = chessBoardRef.current
+  
         if(chessBoard && element.classList.contains('box-piece')){
 
-            const grabX = Math.floor((e.clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8))
-            const grabY = 7 - Math.floor((e.clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
+
+
+            const clientX = e.touches ? e.touches[0].clientX:e.clientX
+           const clientY = e.touches ? e.touches[0].clientY:e.clientY
+
+          
+
+            const grabX = Math.floor((clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8))
+            const grabY = 7 - Math.floor((clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
            
             setGrabPosition(new Position(grabX, grabY))
            
             
-            const x = e.clientX-(chessBoard.clientWidth/16);
-            const y = e.clientY-(chessBoard.clientHeight/16);
+            const x = clientX-(chessBoard.clientWidth/16);
+            const y = clientY-(chessBoard.clientHeight/16);
 
-            
-            console.log(grabX, grabY)
-
-            console.log(x,y)
             
             element.style.position = 'absolute';
             element.style.left = `${x}px`;
@@ -148,15 +151,18 @@ const onClickPlayAgain = () => {
         const chessBoard = chessBoardRef.current
         if(activePiece && chessBoard){
 
-            const minX = chessBoard.offsetLeft-25
-            const minY = chessBoard.offsetTop-15
-            const maxX = chessBoard.offsetLeft+chessBoard.clientWidth-65
-            const maxY = chessBoard.offsetTop+chessBoard.clientHeight-65
-            const x = e.clientX-(chessBoard.clientWidth/16);
-            const y = e.clientY-(chessBoard.clientHeight/16);
+            
+            const clientX = e.touches ? e.touches[0].clientX:e.clientX
+           const clientY = e.touches ? e.touches[0].clientY:e.clientY
+
+            const minX = chessBoard.offsetLeft-10
+            const minY = chessBoard.offsetTop-10
+            const maxX = chessBoard.offsetLeft+chessBoard.clientWidth-40
+            const maxY = chessBoard.offsetTop+chessBoard.clientHeight-40
+            const x = clientX-(chessBoard.clientWidth/16);
+            const y = clientY-(chessBoard.clientHeight/16);
 
 
-            console.log(x,y)
 
             if(x<minX){
                 activePiece.style.left = `${minX}px`
@@ -215,11 +221,14 @@ const onClickPlayAgain = () => {
     const dropPiece = (e) => {
         const chessBoard = chessBoardRef.current
 
-        
 
         if(activePiece && chessBoard){
-            const x =  Math.floor((e.clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8))
-            const y = 7 - Math.floor((e.clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
+
+            const clientX = e.changedTouches ? e.changedTouches[0].clientX:e.clientX
+           const clientY = e.changedTouches ? e.changedTouches[0].clientY:e.clientY
+
+            const x =  Math.floor((clientX-chessBoard.offsetLeft)/(chessBoard.clientWidth/8))
+            const y = 7 - Math.floor((clientY-chessBoard.offsetTop)/(chessBoard.clientHeight/8))
 
             const currentPiece = chessPieces.find(each => each.position.x===grabPosition.x && each.position.y===grabPosition.y)
 
@@ -332,7 +341,8 @@ const onClickPlayAgain = () => {
         }
         
     }
-
+//  
+        
     
     
     return (
@@ -346,7 +356,7 @@ const onClickPlayAgain = () => {
             </div>
         </div>
         
-        <div ref={chessBoardRef} onTouchStart={(e) => grabPiece(e)} onMouseDown={(e) => grabPiece(e)} onMouseUp={(e)=>dropPiece(e)} onMouseMove={(e) => movePiece(e)} className='board-container'>
+        <div ref={chessBoardRef}  onMouseDown={(e) => grabPiece(e)}  onMouseUp={(e)=>dropPiece(e)} onMouseMove={(e) => movePiece(e)} onTouchStart={(e) => grabPiece(e)} onTouchEnd={(e)=>dropPiece(e)} onTouchMove={(e) => movePiece(e)} className='board-container'>
 
         {block}
     </div>
