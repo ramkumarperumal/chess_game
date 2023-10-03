@@ -87,7 +87,7 @@ useEffect(() => {
             setGameResult(initialPieces.getTeamTurn()===pieceColorConstant.white?'The winner is black':'The winner is white')
         }
         else{
-            setGameResult('Thw game is draw')
+            setGameResult('The game is draw')
         }
         gameOverModalRef.current.classList.remove('modal-con-hidden')
     }
