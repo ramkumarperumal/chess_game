@@ -1,6 +1,5 @@
 import { Piece } from "./models/piece"
 import { Position } from "./models/position"
-import { board } from "./models/board"
 
 export const verticalNotation = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
