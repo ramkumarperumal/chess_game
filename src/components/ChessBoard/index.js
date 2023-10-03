@@ -346,7 +346,7 @@ const onClickPlayAgain = () => {
             </div>
         </div>
         
-        <div ref={chessBoardRef} onMouseDown={(e) => grabPiece(e)} onMouseUp={(e)=>dropPiece(e)} onMouseMove={(e) => movePiece(e)} className='board-container'>
+        <div ref={chessBoardRef} onTouchStart={(e) => grabPiece(e)} onMouseDown={(e) => grabPiece(e)} onMouseUp={(e)=>dropPiece(e)} onMouseMove={(e) => movePiece(e)} className='board-container'>
 
         {block}
     </div>
