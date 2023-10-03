@@ -45,3 +45,33 @@
     cursor: pointer;
     background-color: rgba(255,255,255,0.3);
 }
+
+.game-over-para{
+    font-size: 32px;
+    font-family: 'Roboto';
+}
+
+.modal-container-game-over{
+
+    width: calc(100vh * 0.9);
+    height: calc((100vh * 0.85)/2);
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(127,127,127,0.8);
+
+}
+
+.game-over-btn{
+    height: 50px;
+    width: 180px;
+    background-color: #769656;
+    border: 0px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 20px;
+}

@@ -1,8 +1,8 @@
-import { pieceTypeConstant } from "../constants"
+
+import {  pieceTypeConstant } from "../constants"
 import { Position } from "../models/position"
 import { boxOccupied, boxOccupiedByOpp } from "./generalRules"
-import { board } from "../models/board"
-import { getPossibleMove } from "./chessrules"
+
 
 export const kingMove = (px,py,x,y,pieceType,pieceColor,chessPieces) => {
    
@@ -40,93 +40,67 @@ export const possibleKingMove = (piece, chessPieces) => {
     }
 
 
-
-    return checkKingMoves(possibleMoves, piece, chessPieces)
-    
+    return possibleMoves.concat(kingCastlingMove(piece, chessPieces))
 }
 
-const checkKingMoves = (possibleMoves, piece, chessPieces) => {
-    
+export const kingCastlingMove = (piece, chessPieces) => {
 
-    for(const move of possibleMoves){
-        
-        const stimulatedBoard = new board(chessPieces.map(each => {
-            return {
-                image: each.image,
-                position: new Position(each.position.x, each.position.y),
-                pieceType: each.pieceType,
-                pieceColor: each.pieceColor,
-                enPassant: each.enPassant,
-                possibleMoves: each.possibleMoves.map(each => new Position(each.x, each.y))
-            }
-        }))
-        
+    let possibleMoves = []
 
-        const pieceAtDestination = stimulatedBoard.pieces.find(p => p.position.samePosition(move))
-
-        if(pieceAtDestination){
-            stimulatedBoard.pieces = stimulatedBoard.pieces.filter(p => !p.position.samePosition(move))
-        }
-
-        const simulatedKing = stimulatedBoard.pieces.find(each => each.pieceType===pieceTypeConstant.king && each.pieceColor===piece.pieceColor)
-
-        simulatedKing.position = move
-
-        const enemyPieces = stimulatedBoard.pieces.filter(each => each.pieceColor!==piece.pieceColor)
-        
-
-        for(const enemy of enemyPieces){
-            if(enemy.pieceType===pieceTypeConstant.king){
-
-                let possibleEnemyKingMove = []
-    
-                const currX = enemy.position.x
-                const currY = enemy.position.y
-
-                for(let i=-1; i<2; i++){
-                    for(let j=-1; j<2; j++){
-                        if(i===0 && j===0){
-                            continue 
-                        }
-                        if(currX+i<8 && currX+i>=0 && currY+j<8 && currY+j>=0 && (!boxOccupied(new Position(currX+i,currY+j), stimulatedBoard.pieces) || boxOccupiedByOpp(new Position(currX+i, currY+j), enemy.pieceColor, stimulatedBoard.pieces))){
-                            possibleEnemyKingMove.push(new Position(currX+i, currY+j))
-                        }
-                    }
-                }
-                enemy.possibleMoves = possibleEnemyKingMove
-
-            }
-            else{
-            
-            enemy.possibleMoves = getPossibleMove(enemy, stimulatedBoard.pieces)
-        }
+    if(piece.hasMoved){
+        return possibleMoves
     }
 
-        let safe = true 
+    const rooks = chessPieces.filter(each => each.pieceType===pieceTypeConstant.rook && each.pieceColor===piece.pieceColor && !each.hasMoved)
 
-        for(const p of stimulatedBoard.pieces){
-            if(p.pieceColor === piece.pieceColor){
-                continue
-            }
-            if(p.pieceType === pieceTypeConstant.pawn){
-                const possiblePawnMoves = getPossibleMove(p, stimulatedBoard.pieces)
+    for(const rook of rooks){
 
-                if(possiblePawnMoves.some(each => each.x!==p.position.x && each.samePosition(move))){
-                    safe = false
-                    break 
-                }
-            }
-            else if(p.possibleMoves.some(each =>  each.samePosition(move))){
-                safe = false
-                break
-            }
+
+        const direction = (rook.position.x-piece.position.x)>0?1:-1
+
+        const adjPosition = new Position(piece.position.x+direction, piece.position.y)
+
+
+        if(!rook.possibleMoves.some(each => each.samePosition(adjPosition))){
+            continue
         }
 
-        if(!safe){
-            possibleMoves = possibleMoves.filter(each => !each.samePosition(move))
+        const conceringTiles = rook.possibleMoves.filter(each => each.y===piece.position.y)
+
+
+        const enemyPieces = chessPieces.filter(each => each.pieceColor!==piece.pieceColor)
+
+        let valid = true
+
+        for(const enemy of enemyPieces){
+            if(!enemy.possibleMoves){
+                continue 
+            }
+            if(enemy.possibleMoves.some(each => conceringTiles.some(each2 => each.samePosition(each2)))){
+                valid = false
+            }
+
+            if(!valid){
+                break 
+            }
+
         }
+
+
+        if(!valid){
+            continue
+        }
+
+        possibleMoves.push(new Position(rook.position.x, rook.position.y))
+
+
+
+        
+
     }
 
     return possibleMoves
+
+
 
 }

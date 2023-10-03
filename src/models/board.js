@@ -11,5 +11,11 @@ export class board {
     }
 
 
+    getTeamTurn() {
+        return this.moveCount%2===0?pieceColorConstant.white:pieceColorConstant.black
+    }
+    
+
+
     
 }
